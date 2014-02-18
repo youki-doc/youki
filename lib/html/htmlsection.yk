@@ -1,0 +1,10 @@
+\define-marco[\htmlSection[\$block]][\do[
+	\setf[\s][\derive[\$block-definingScope]]
+	\setpart[\s][.lit][\dothtml-dotlit]
+	\setpart[\s][.p][\dothtml-dotp]
+	\setpart[\s][.li][\dothtml-dotli]
+	\setpart[\s][.ul][\dothtml-dotul]
+	\setpart[\s][.ol][\dothtml-dotol]
+	\setpart[\s][.verbatim][\dothtml-dotverbatim]
+	\return[\evaluateInScope[\s][\$block]]
+]]

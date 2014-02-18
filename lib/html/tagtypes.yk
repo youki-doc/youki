@@ -14,3 +14,8 @@
 \defineTag[div][\type[block]]
 \defineTag[article][\type[block]]
 \defineTag[section][\type[block]]
+
+\defineTag[b][\type[inline]]
+\defineTag[i][\type[inline]]
+\defineTag[u][\type[inline]]
+\defineTag[code][\type[inline]]
