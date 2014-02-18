@@ -1,4 +1,4 @@
-\define-marco[\htmlSection[\$block]][\do[
+\define-macro[\htmlSection[\$block]][\do[
 	\setf[\s][\derive[\$block-definingScope]]
 	\setpart[\s][.lit][\dothtml-dotlit]
 	\setpart[\s][.p][\dothtml-dotp]
