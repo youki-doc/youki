@@ -18,6 +18,7 @@
 
 	[define-tag pre [object [type "block"] [pre true]]]
 
+	[define-tag a [object [type "inline"]]]
 	[define-tag b [object [type "inline"]]]
 	[define-tag i [object [type "inline"]]]
 	[define-tag u [object [type "inline"]]]

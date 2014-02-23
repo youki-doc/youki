@@ -1,10 +1,13 @@
-[define-macro [html-section $block] [begin
-	[setf s [derive $block/definingScope]]
-	[setpart s ".lit" dothtml/dotlit]
-	[setpart s ".verbatim" dothtml/dotverbatim]
-	[setpart s ".p" dothtml/dotp]
-	[setpart s ".li" dothtml/dotli]
-	[setpart s ".ul" dothtml/dotul]
-	[setpart s ".ol" dothtml/dotol]
-	[evaluate-in-scope s $block]
+[define-macro [html-section $block] [cond
+	[$block/definingScope
+		[setf s [derive $block/definingScope]]
+		[setpart s ".lit" dothtml/dotlit]
+		[setpart s ".verbatim" dothtml/dotverbatim]
+		[setpart s ".p" dothtml/dotp]
+		[setpart s ".li" dothtml/dotli]
+		[setpart s ".ul" dothtml/dotul]
+		[setpart s ".ol" dothtml/dotol]
+		[evaluate-in-scope s $block]
+	]
+	[true [throw "Unsupported Type"]]
 ]]
