@@ -7,6 +7,8 @@
 		[setpart s ".li" dothtml/dotli]
 		[setpart s ".ul" dothtml/dotul]
 		[setpart s ".ol" dothtml/dotol]
+		[setpart s ".inline**" dothtml/dotstrong]
+		[setpart s ".inline*" dothtml/dotem]
 		[evaluate-in-scope s $block]
 	]
 	[true [throw "Unsupported Type"]]

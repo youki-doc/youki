@@ -1,0 +1,125 @@
+[begin
+	[load-library {[= _loaderDir]/ove}]
+	[load-library {[= _loaderDir]/html}]
+
+	[define-macro [define-link $name $address] [begin
+		[setf address [evaluate $address]]
+		[invoke setf 'clientScope $name '[lambda text [begin
+			[if text
+				[tags/a {href="\address"} text]
+				[tags/a {href="\address"} [dothtml/dotlit address]]]
+		]]]
+		nothing
+	]]
+	[define-macro [article $title $body] [begin
+		[tags/html [tags/body {
+			[tags/h1 [invoke html-section $title]]
+			[tags/article [evaluate-in-scope [derive $body/definingScope] `[begin
+				[define section-meta [object [level 1]]]
+				[define-macro [section $title $content] [begin
+					[setf section-meta/level [+ section-meta/level 1]]
+					[define result [cond
+						[$title [tags/section {
+							[[part tags {h[= section-meta/level]}] [evaluate $title]]
+							[evaluate $content]
+						}]]
+						[$content [tags/section [evaluate $content]]]
+					]]
+					[setf section-meta/level [- section-meta/level 1]]
+					result
+				]]
+				[html-section ,$body]
+			]]]
+		}]]
+	]]
+]
+
+[util/trace]::
+[article {Youki · 有纪}]::
+
+Youki 是一个文档生成语言，其具备完整的编程特性和完备的宏特性，使之可作任意复杂的文章。Youki 是完全开放源码的，依照 MIT 协议发布。
+
+[section "目录"]:
+	# 文法
+		# 章句
+		# 算式
+		# 抄录
+		# 它们的组合
+	# 预定义函数和宏
+		# 基础
+		# 高级
+	# 有纪华章
+
+[section "文法"]:
+	Youki 文章是由许多种元素组合而成，主要的是**章句**、**算式**和**抄录**。它们可以相互穿插嵌套，这也是 Youki 强大能力的来源。
+
+	[section {章句}]:
+		Youki 使用章句以表示文字。一段章句用花括弧围住，形如：
+		
+		[pre]|
+			{这样。}
+
+		当然也可以更复杂，比如包含若干个段落，类似
+
+		[pre]|
+			{
+				这里的情形。
+
+				章句中的段落用空行分隔，一个段落可以包含多行，方便
+				组织比较复杂的文字。
+
+				同一份章句中的段落必须相同缩进，每一行也是如此。
+
+				不过你可以通过花括弧来组织缩进。花括弧 {
+					里面是另一份章句，对于外面来说只相当于一个字。
+
+					在花括弧里的段落可以增加缩进，只要其中的内容缩进保持一致即可。
+
+					{
+			其实也可以减少缩进 :)
+					}
+				}。
+			}
+
+		在章句里也可以包含列表，它们
+
+		[pre]|
+			- 由一系列的项目组成
+			- 每一项占据一行
+			+ 列表表头可以是加号、减号或者井号
+			+ 表头相同的算作同一个列表
+			# 使用井号可以得到有数字编号的列表
+			+ 列表的每一项只能有一行
+			+ 不过可以
+				- 包含子列表
+				- 子列表
+					# 可以有很多层
+					# 很多内容
+			+ 当然，任何时候都可以通过 {
+				花
+				括
+				弧
+			} 来包含更复杂的内容
+
+		不过只有段落和列表，对于生成文章来说仍然远远不够，因此 Youki 支持一种基于缩进的格式，可以插入任意复杂的模式。要使用它，你需要
+
+		[pre]|
+			[一个算式调用]:
+				后面加上冒号
+
+				然后就是缩进了的章句节。
+
+		Youki 中绝大多数更复杂的文章组件都是用这种方式提供的，例如，
+
+		[pre]|
+			[blockquote]:
+				使用 `[blockquote]:` 就可以创建引文区段
+
+		程序员有时候会需要在文章中添加代码块，这些东西都是预先排版好的文字块，我们不想把它当成段落或者列表排版。为了处理这种情形，Youki 的做法是将上面那种「算式-冒号」中的冒号 `:` 替换成竖线 `|`，之后被缩进的地方保持原样，类似
+
+		[pre]|
+			[pre]|
+				这个样子。
+
+			[highlight javascript]|
+				// 于是你就可以在这里放源码了
