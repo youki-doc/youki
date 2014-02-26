@@ -2,15 +2,6 @@
 	[load-library {[= _loaderDir]/ove}]
 	[load-library {[= _loaderDir]/html}]
 
-	[define-macro [define-link $name $address] [begin
-		[setf address [evaluate $address]]
-		[invoke setf 'clientScope $name '[lambda text [begin
-			[if text
-				[tags/a {href="\address"} text]
-				[tags/a {href="\address"} [dothtml/dotlit address]]]
-		]]]
-		nothing
-	]]
 	[define-macro [article $title $body] [begin
 		[tags/html [tags/body {
 			[tags/h1 [invoke html-section $title]]
