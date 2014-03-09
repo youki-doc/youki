@@ -1,0 +1,42 @@
+[begin
+	[load-library [& _loaderDir "/ove"]]
+	[load-library [& _loaderDir "/html"]]
+
+	[define-macro [youki-article $title $body] [begin
+		[define section-meta [object [level 1] [count 0]]]
+		[define [proper-head] [apply [part tags [& "h" section-meta/level]] ##]]
+		[define [proper-head-for-embedded] [apply [part tags [+ [& "h" section-meta/level] 1]] ##]]
+
+		[define-macro [section $title $content] [begin
+			[setf section-meta/level [+ section-meta/level 1]]
+			[define result [cond
+				[$content [begin 
+					[setf title [evaluate $title]]
+					[setf title-id [ssub title [regex {:[^a-zA-Z0-9\-\u0080-\uffff]+:} "g"] "-"]]
+					[tags/section {
+						[proper-head [html-properties [id [& "section-" title-id]]] title]
+						[evaluate $content]
+					}]]]
+				[$title [tags/section [evaluate $title]]]
+			]]
+			[setf section-meta/level [- section-meta/level 1]]
+			result
+		]]
+		[define [figure src comment] [tags/figure {
+			[tags/img [html-properties [src src]]]
+			[tags/figcaption comment]
+		}]]
+		[define s [derive $body/definingScope]]
+		[setf s/section section]
+
+		{
+			[html5-doctype]
+			[tags/html [tags/body {
+				[tags/h1 [invoke html-section $title]]
+				[tags/article [evaluate-in-scope s `[begin
+					[html-section ,$body]
+				]]]
+			}]]
+		}
+	]]
+]

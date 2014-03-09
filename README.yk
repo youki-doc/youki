@@ -1,36 +1,13 @@
 [begin
-	[load-library {[= _loaderDir]/ove}]
-	[load-library {[= _loaderDir]/html}]
-
-	[define-macro [article $title $body] [begin
-		[tags/html [tags/body {
-			[tags/h1 [invoke html-section $title]]
-			[tags/article [evaluate-in-scope [derive $body/definingScope] `[begin
-				[define section-meta [object [level 1]]]
-				[define-macro [section $title $content] [begin
-					[setf section-meta/level [+ section-meta/level 1]]
-					[define result [cond
-						[$title [tags/section {
-							[[part tags {h[= section-meta/level]}] [evaluate $title]]
-							[evaluate $content]
-						}]]
-						[$content [tags/section [evaluate $content]]]
-					]]
-					[setf section-meta/level [- section-meta/level 1]]
-					result
-				]]
-				[html-section ,$body]
-			]]]
-		}]]
-	]]
+	[load-library [& _loaderDir "/article"]]
 ]
 
 [util/trace]::
-[article {Youki · 有纪}]::
+[youki-article {Youki · 有纪}]::
 
 Youki 是一个文档生成语言，其具备完整的编程特性和完备的宏特性，使之可作任意复杂的文章。Youki 是完全开放源码的，依照 MIT 协议发布。
 
-[section "目录"]:
+[section {目录}]:
 	# 文法
 		# 章句
 		# 算式
