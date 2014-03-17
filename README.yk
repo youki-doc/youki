@@ -1,7 +1,4 @@
-[begin
-	[load-library [& _loaderDir "/article"]]
-]
-
+[load-library [path/join directories/loader "article"]]
 [util/trace]::
 [youki-article {Youki · 有纪}]::
 

@@ -1,6 +1,6 @@
 [begin
-	[load-library [& _loaderDir "/ove"]]
-	[load-library [& _loaderDir "/html"]]
+	[load-library [path/join directories/loader "ove"]]
+	[load-library [path/join directories/loader "html"]]
 
 	[define-macro [youki-article $title $body] [begin
 		[define section-meta [object [level 1] [count 0]]]
@@ -26,8 +26,14 @@
 			[tags/img [html-properties [src src]]]
 			[tags/figcaption comment]
 		}]]
+		[define [@ link content] [cond
+			[content [tags/a [html-properties [href link]] content]]
+			[true [tags/a [html-properties [href link]] [dothtml/dotlit link]]]
+		]]
 		[define s [derive $body/definingScope]]
 		[setf s/section section]
+		[setf s/figure figure]
+		[setpart s "@" @]
 
 		{
 			[html5-doctype]
@@ -39,4 +45,6 @@
 			}]]
 		}
 	]]
+
+	[export youki-article]
 ]

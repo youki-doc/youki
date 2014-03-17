@@ -1,5 +1,7 @@
 [begin
 	[define [html5-doctype] "<!DOCTYPE html>"]
+	[export html5-doctype]
+	
 	[define-tag html [object [type "block"]]]
 	[define-tag head [object [type "block"]]]
 	[define-tag title [object [type "block"]]]
