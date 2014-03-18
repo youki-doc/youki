@@ -1,6 +1,26 @@
-[load-library [path/join directories/loader "article"]]
-[util/trace]::
-[youki-article {Youki · 有纪}]::
+[load-library [path/join directories/loader "youki-article"]]
+
+[define [template article] [util/trace {
+	[html5-doctype]
+	[tags/html {
+		[tags/head {
+			[tags/meta [html-properties [charset "utf-8"]]]
+			[tags/title article/title]
+		}]
+		[tags/body [tags/article {
+			[tags/h1 article/title]
+			[= article/body]
+		}]]
+	}]
+}]]
+
+[define [template/inject s] [begin
+	[define [s/title content] [setf s/current-article/title content]]
+]]
+
+[youki-article template]::
+
+[title {Youki · 有纪}]
 
 Youki 是一个文档生成语言，其具备完整的编程特性和完备的宏特性，使之可作任意复杂的文章。Youki 是完全开放源码的，依照 MIT 协议发布。
 

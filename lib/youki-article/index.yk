@@ -2,10 +2,13 @@
 	[load-library [path/join directories/loader "ove"]]
 	[load-library [path/join directories/loader "html"]]
 
-	[define-macro [youki-article $title $body] [begin
+	[define-macro [youki-article $template $body] [begin
+		[define template [evaluate $template]]
 		[define section-meta [object [level 1] [count 0]]]
 		[define [proper-head] [apply [part tags [& "h" section-meta/level]] ##]]
 		[define [proper-head-for-embedded] [apply [part tags [+ [& "h" section-meta/level] 1]] ##]]
+
+		[define current-article [object]]
 
 		[define-macro [section $title $content] [begin
 			[setf section-meta/level [+ section-meta/level 1]]
@@ -22,6 +25,7 @@
 			[setf section-meta/level [- section-meta/level 1]]
 			result
 		]]
+
 		[define [figure src comment] [tags/figure {
 			[tags/img [html-properties [src src]]]
 			[tags/figcaption comment]
@@ -30,20 +34,19 @@
 			[content [tags/a [html-properties [href link]] content]]
 			[true [tags/a [html-properties [href link]] [dothtml/dotlit link]]]
 		]]
+
 		[define s [derive $body/definingScope]]
-		[setf s/section section]
-		[setf s/figure figure]
+		[define s/section section]
+		[define s/figure figure]
 		[setpart s "@" @]
 
-		{
-			[html5-doctype]
-			[tags/html [tags/body {
-				[tags/h1 [invoke html-section $title]]
-				[tags/article [evaluate-in-scope s `[begin
-					[html-section ,$body]
-				]]]
-			}]]
-		}
+		[define s/current-article current-article]
+
+		[if template/inject [template/inject s]]
+
+		[define current-article/body [evaluate-in-scope s `[html-section ,$body]]]
+
+		[template current-article]
 	]]
 
 	[export youki-article]
