@@ -17,7 +17,7 @@
 					[setf title [evaluate $title]]
 					[setf title-id [ssub title [regex {:[^a-zA-Z0-9\-\u0080-\uffff]+:} "g"] "-"]]
 					[tags/section {
-						[proper-head [html-properties [id [& "section-" title-id]]] title]
+						[proper-head [html-attributes [id [& "section-" title-id]]] title]
 						[evaluate $content]
 					}]]]
 				[$title [tags/section [evaluate $title]]]
@@ -27,24 +27,20 @@
 		]]
 
 		[define [figure src comment] [tags/figure {
-			[tags/img [html-properties [src src]]]
+			[tags/img [html-attributes [src src]]]
 			[tags/figcaption comment]
 		}]]
-		[define [@ link content] [cond
-			[content [tags/a [html-properties [href link]] content]]
-			[true [tags/a [html-properties [href link]] [dothtml/dotlit link]]]
-		]]
 
 		[define s [derive $body/definingScope]]
 		[define s/section section]
 		[define s/figure figure]
-		[setpart s "@" @]
 
 		[define s/current-article current-article]
 
-		[if template/inject [template/inject s]]
-
+		[define additional-parameters [map [slice ## 2] evaluate]]
+		[if template/inject-before [apply template/inject-before [cons s additional-parameters]]]
 		[define current-article/body [evaluate-in-scope s `[html-section ,$body]]]
+		[if template/inject-after [apply template/inject-after [cons s additional-parameters]]]
 
 		[template current-article]
 	]]

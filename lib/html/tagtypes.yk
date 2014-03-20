@@ -1,6 +1,11 @@
 [begin
 	[define [html5-doctype] "<!DOCTYPE html>"]
 	[export html5-doctype]
+	[define [@ link content] [cond
+		[content [tags/a [html-attributes [href link]] content]]
+		[true [tags/a [html-attributes [href link]] [dothtml/dotlit link]]]
+	]]
+	[export @]
 	
 	[define-tag html [object [type "block"]]]
 	[define-tag head [object [type "block"]]]
@@ -8,6 +13,8 @@
 	[define-tag script [object [type "inline"]]]
 	[define-tag style [object [type "inline"]]]
 	[define-tag meta [object [type "void"]]]
+	[define-tag base [object [type "void"]]]
+	[define-tag link [object [type "void"] [notexpose true]]]
 
 	[define-tag body [object [type "block"]]]
 	[define-tag p [object [type "block"]]]
@@ -43,7 +50,9 @@
 	[define-tag i [object [type "inline"]]]
 	[define-tag u [object [type "inline"]]]
 	[define-tag strong [object [type "inline"]]]
+	[define-tag span [object [type "inline"]]]
 	[define-tag em [object [type "inline"]]]
 	[define-tag code [object [type "inline"] [pre true]]]
 	[define-tag img [object [type "void"]]]
+	[define-tag br [object [type "void"]]]
 ]

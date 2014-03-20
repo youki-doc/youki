@@ -2,7 +2,7 @@
 	[$block/definingScope
 		[setf s [derive $block/definingScope]]
 		[setpart s ".lit" dothtml/dotlit]
-		[setpart s ".verbatim" dothtml/dotverbatim]
+		[setpart s ".codespan" dothtml/dotcodespan]
 		[setpart s ".p" dothtml/dotp]
 		[setpart s ".li" dothtml/dotli]
 		[setpart s ".ul" dothtml/dotul]
