@@ -1,10 +1,10 @@
 [load-library [path/join directories/loader "youki-article"]]
 
-[define [template article] [util/trace {
+[define [template article aux] [util/trace {
 	[html5-doctype]
 	[tags/html {
 		[tags/head {
-			[tags/meta [html-properties [charset "utf-8"]]]
+			[tags/meta [html-attributes [charset "utf-8"]]]
 			[tags/title article/title]
 		}]
 		[tags/body [tags/article {
@@ -18,7 +18,7 @@
 	[define [s/title content] [setf s/current-article/title content]]
 ]]
 
-[youki-article template]::
+[[macro template article [invoke youki-article template article '[= 333]]] template]::
 
 [title {Youki · 有纪}]
 
