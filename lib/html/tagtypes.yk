@@ -42,6 +42,12 @@
 	[define-tag header [object [type "block"] [notexpose true]]]
 	[define-tag footer [object [type "block"] [notexpose true]]]
 	[define-tag address [object [type "block"] [notexpose true]]]
+	[define-tag table [object [type "block"] [notexpose true]]]
+	[define-tag thead [object [type "block"] [notexpose true]]]
+	[define-tag tbody [object [type "block"] [notexpose true]]]
+	[define-tag tr [object [type "block"] [notexpose true]]]
+	[define-tag th [object [type "block"] [notexpose true]]]
+	[define-tag td [object [type "block"] [notexpose true]]]
 
 	[define-tag pre [object [type "block"] [pre true]]]
 

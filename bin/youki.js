@@ -10,17 +10,20 @@ var scope = pm.init();
 scope['load-library'](scope.directories.loader + '/ove');
 
 if(argv._[0]) {
+	var inputPath = path.resolve(argv._[0]);
 	if(argv.f) {
-		var cwd = path.resolve(path.dirname(argv._[0]));
+		var cwd = path.dirname(inputPath);
 		do {
 			if(fs.existsSync(path.resolve(cwd, '.youki-common/package.json'))){
-				scope.directories['input-common'] = path.join(path.resolve(cwd), ".youki-common/");
-				scope['load-library'](path.resolve(cwd, '.youki-common/'));
+				scope.directories['input-common'] = path.join(cwd, ".youki-common/");
+				scope.directories['base'] = cwd;
+				scope['load-library'](path.join(cwd, ".youki-common/"));
 				break;
 			};
 		} while(cwd !== (cwd = path.resolve(cwd, '..')));
 	}
-	scope['load-library'](path.resolve(argv._[0]))
+	scope['input-path'] = inputPath
+	scope['load-library'](inputPath)
 } else {
 	console.error('Missing input')
 }
