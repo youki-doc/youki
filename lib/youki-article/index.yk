@@ -17,7 +17,7 @@
 					[setf title [evaluate $title]]
 					[setf title-id [ssub title [regex {:[^a-zA-Z0-9\-\u0080-\uffff]+:} "g"] "-"]]
 					[tags/section {
-						[proper-head [html-attributes [id [& "section-" title-id]]] title]
+						[proper-head :id [& "section-" title-id] title]
 						[evaluate $content]
 					}]]]
 				[$title [tags/section [evaluate $title]]]
@@ -27,7 +27,7 @@
 		]]
 
 		[define [figure src comment] [tags/figure {
-			[tags/img [html-attributes [src src]]]
+			[tags/img :src src]
 			[tags/figcaption comment]
 		}]]
 
