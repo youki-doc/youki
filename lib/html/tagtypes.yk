@@ -35,6 +35,7 @@
 	[define-tag article [object [type "block"]]]
 	[define-tag figure [object [type "block"]]]
 	[define-tag figcaption [object [type "block"]]]
+	[define-tag blockquote [object [type "block"]]]
 	[define-tag section [object [type "block"] [notexpose true]]]
 	[define-tag nav [object [type "block"] [notexpose true]]]
 	[define-tag main [object [type "block"] [notexpose true]]]
