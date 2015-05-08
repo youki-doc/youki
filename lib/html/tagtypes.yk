@@ -1,5 +1,5 @@
 [begin
-	[define [html5-doctype] "<!DOCTYPE html>"]
+	[define [html5-doctype] "<!DOCTYPE HTML>"]
 	[export html5-doctype]
 	[define [@ link content] [cond
 		[content [tags/a [html-attributes [href link]] content]]
@@ -56,6 +56,8 @@
 	[define-tag b [object [type "inline"]]]
 	[define-tag i [object [type "inline"]]]
 	[define-tag u [object [type "inline"]]]
+	[define-tag s [object [type "inline"]]]
+	[define-tag del [object [type "inline"]]]
 	[define-tag strong [object [type "inline"]]]
 	[define-tag span [object [type "inline"]]]
 	[define-tag em [object [type "inline"]]]
