@@ -1,0 +1,11 @@
+{
+  "name": "youki",
+  "version": "0.1.0",
+  "main": "./lib/pm.js",
+  "dependencies": {
+    "yargs": "^7.0.2"
+  },
+  "bin": {
+	  "yki":"./bin/yki.js"
+  }
+}
