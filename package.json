@@ -1,7 +1,7 @@
 {
   "name": "youki",
-  "version": "0.1.0",
-  "main": "./lib/pm.js",
+  "version": "0.3.0",
+  "main": "./main.js",
   "dependencies": {
     "yargs": "^7.0.2"
   },
