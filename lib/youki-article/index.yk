@@ -15,7 +15,7 @@
 			[define result [cond
 				[$content [begin 
 					[setf title [evaluate $title]]
-					[setf title-id [ssub [& "" title] [regex {:[^a-zA-Z0-9\-\u0080-\uffff]+:} "g"] "-"]]
+					[setf title-id [ssub [& "" title] [regex {|[^a-zA-Z0-9\-\u0080-\uffff]+|} "g"] "-"]]
 					[tags/section {
 						[proper-head :id [& "section-" title-id] [& title [tags/a :href [& current-article/html-url "#section-" title-id] :class "handle" {[span :class "h"]{(}#[span :class "h"]{)}}]]]
 						[evaluate $content]
